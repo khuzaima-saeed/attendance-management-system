@@ -300,19 +300,89 @@
 // "use client"
 // import React, { useState } from 'react'
 // import QrScanner from 'qr-scanner';
-
+"use client"
 import WebcamScanner from '@/components/QrScanner';
 import Link from 'next/link'
+import { useAuth } from "@/context/AuthContext";
+import {collection, addDoc, query, where, getDocs} from "firebase/firestore"
+import { useState } from 'react';
+import { db } from "@/app/firebase";
+import { useRouter } from 'next/navigation';
 
 
 const Scan = () => {
+
+    const { user } = useAuth();
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
+
+
+    const handleScan = async (data) => {
+        setIsLoading(true); // Set loading state
+        try {
+        // const buildingCode = extractBuildingCodeFromData(data); // Assuming a function to parse building code
+        console.log("The data is: ",data);
+
+        if (data == "Test QR"){
+    
+        if (!user) {
+            setErrorMessage("Please sign in to mark attendance");
+            return;
+        }
+    
+        const today = new Date().toLocaleDateString(); // Format date consistently
+        const q = query(collection(db, "attendance"), where("employeeId", "==", user.uid), where("date", "==", today));
+        const snapshot = await getDocs(q);
+    
+        if (snapshot.empty) {
+            // No existing record for today - add attendance
+            await addDoc(collection(db, "attendance"), {
+            employeeId: user.uid,
+            email:user.email,
+            date: today,
+            time: new Date().toLocaleTimeString(),
+            // buildingCode,
+            });
+            console.log("Attendance marked successfully!");
+            setScanned(false);
+            router.push('/');
+        } else {
+            console.log("Attendance already marked for today.");
+            router.push('/');
+        }
+        }else{
+            console.log("Invalid QR code");
+        }
+        } catch (error) {
+        console.error("Error adding attendance:", error);
+        const message = error.message || "An error occurred. Please try again."; // Handle specific errors if possible
+        setErrorMessage(message);
+        setScanned(false);
+        } finally {
+        setIsLoading(false); // Set loading state to false after completion (success or error)
+        }
+    };
+
+
+
+
+
+
+
+
+
+
   
   return (
     <div>
-      <WebcamScanner />
+      <WebcamScanner onScanned={handleScan} />
       <Link href="/dashboard">
         <button>Proceed</button>
       </Link>
+      {errorMessage && <p className="text-black">{errorMessage}</p>}
+      {isLoading && <p className='text-black'>Marking attendance...</p>}
     </div>
     
   )

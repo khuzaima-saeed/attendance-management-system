@@ -72,11 +72,11 @@ import QrScanner from 'qr-scanner';
 import { useRouter, usePathname } from 'next/navigation';
 
 
-const WebcamScanner = () => {
+const WebcamScanner = ({ onScanned }) => {
   const videoRef = useRef(null);
   const [scanned, setScanned] = useState(false);
 
-  const router = useRouter();
+//   const router = useRouter();
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -89,7 +89,10 @@ const WebcamScanner = () => {
         if (!scanned) { // Check if a QR code has already been scanned
             console.log('Decoded QR code:', result.data);
             setScanned(true);
-            router.push('/dashboard');
+            // router.push('/');
+            if (onScanned){
+                onScanned(result.data);
+            }
         }
         
       },

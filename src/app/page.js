@@ -29,6 +29,26 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from "@/app/firebase";
+
+const handleAdd = async() => {
+  try{
+    const docRef = await addDoc(collection(db, "employees"), {
+      name: "Muhammad Saad",
+      email: "saad@gmail.com",
+      phone: "0345-1234567",
+      address: "Karachi",
+    });
+    console.log("Document written with ID: ", docRef.id);
+
+  }
+  catch(e){
+    console.error("Error adding document: ", e);
+  }
+  
+
+}
 
 
 export default function Home() {
@@ -47,6 +67,10 @@ export default function Home() {
       <Link href="/scan">
         <button>Scan</button>
       </Link>
+      <Link href="/dashboard">
+        <button>Add User Page</button>
+      </Link>
+      <button onClick={handleAdd}>Add Employee</button>
     </main>
   );
 }
