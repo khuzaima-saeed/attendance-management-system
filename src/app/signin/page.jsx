@@ -240,50 +240,162 @@ const Signin = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '40%',
-        margin: 'auto',
-      }}
-    >
-      <h1 className="text-center my-3 ">Login</h1>
-      <Form onSubmit={handleLogin}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            onChange={(e) =>
-              setData({
-                ...data,
-                email: e.target.value,
-              })
-            }
-            value={data.email}
-            required
-            type="email"
-            placeholder="Enter email"
-          />
-        </Form.Group>
+    // <div
+    //   style={{
+    //     width: '40%',
+    //     margin: 'auto',
+    //   }}
+    // >
+    //   <h1 className="text-center my-3 ">Login</h1>
+    //   <Form onSubmit={handleLogin}>
+    //     <Form.Group className="mb-3" controlId="formBasicEmail">
+    //       <Form.Label>Email address</Form.Label>
+    //       <Form.Control
+    //         onChange={(e) =>
+    //           setData({
+    //             ...data,
+    //             email: e.target.value,
+    //           })
+    //         }
+    //         value={data.email}
+    //         required
+    //         type="email"
+    //         placeholder="Enter email"
+    //       />
+    //     </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            onChange={(e) =>
-              setData({
-                ...data,
-                password: e.target.value,
-              })
-            }
-            value={data.password}
-            required
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
-      </Form>
+    //     <Form.Group className="mb-3" controlId="formBasicPassword">
+    //       <Form.Label>Password</Form.Label>
+    //       <Form.Control
+    //         onChange={(e) =>
+    //           setData({
+    //             ...data,
+    //             password: e.target.value,
+    //           })
+    //         }
+    //         value={data.password}
+    //         required
+    //         type="password"
+    //         placeholder="Password"
+    //       />
+    //     </Form.Group>
+    //     <Button variant="primary" type="submit">
+    //       Login
+    //     </Button>
+    //   </Form>
+    // </div>
+
+    // <div
+    //   className="min-h-screen flex flex-col justify-center items-center bg-gray-800 text-white"
+    // >
+    //   <h1 className="text-3xl font-semibold mb-8">Login</h1>
+    //   <div className="w-80">
+    //     <Form onSubmit={handleLogin}>
+    //       <Form.Group className="mb-3" controlId="formBasicEmail">
+    //         <Form.Label className="sr-only">Email address</Form.Label>
+    //         <Form.Control
+    //           onChange={(e) =>
+    //             setData({
+    //               ...data,
+    //               email: e.target.value,
+    //             })
+    //           }
+    //           value={data.email}
+    //           required
+    //           type="email"
+    //           placeholder="Email address"
+    //           className="bg-gray-900 text-white border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500 block w-full"
+    //         />
+    //       </Form.Group>
+
+    //       <Form.Group className="mb-3" controlId="formBasicPassword">
+    //         <Form.Label className="sr-only">Password</Form.Label>
+    //         <Form.Control
+    //           onChange={(e) =>
+    //             setData({
+    //               ...data,
+    //               password: e.target.value,
+    //             })
+    //           }
+    //           value={data.password}
+    //           required
+    //           type="password"
+    //           placeholder="Password"
+    //           className="bg-gray-900 text-white border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500 block w-full"
+    //         />
+    //       </Form.Group>
+    //       <Button
+    //         variant="primary"
+    //         type="submit"
+    //         className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    //       >
+    //         Login
+    //       </Button>
+    //     </Form>
+    //   </div>
+    // </div>
+
+
+    <div
+      className="min-h-screen flex flex-col justify-center items-center bg-gray-900 text-white"
+    >
+      <h1 className="text-3xl font-semibold mb-8">Login</h1>
+      <div className="w-80">
+        <Form onSubmit={handleLogin}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label className="sr-only">Email address</Form.Label>
+            <Form.Control
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  email: e.target.value,
+                })
+              }
+              value={data.email}
+              required
+              type="email"
+              placeholder="Email address"
+              className="bg-gray-800 text-white border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500 block w-full"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label className="sr-only">Password</Form.Label>
+            <Form.Control
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  password: e.target.value,
+                })
+              }
+              value={data.password}
+              required
+              type="password"
+              placeholder="Password"
+              className="bg-gray-800 text-white border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500 block w-full"
+            />
+          </Form.Group>
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Login
+          </Button>
+        </Form>
+      </div>
+      {/* <p className="mt-6 text-center text-gray-400">
+        Not a member?{' '}
+        <button onClick={() => router.push('signup')} className="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">
+          Sign Up
+        </button>
+      </p> */}
     </div>
+
+
+
+
+
   )
 }
 

@@ -66,52 +66,80 @@
 
 
 
-"use client";
-import { useEffect, useRef, useState } from 'react';
-import QrScanner from 'qr-scanner';
-import { useRouter, usePathname } from 'next/navigation';
+// "use client";
+// import { useEffect, useRef } from 'react';
+// import QrScanner from 'qr-scanner';
 
+// const WebcamScanner = ({ onScanned, active }) => {
+//     const videoRef = useRef(null);
+//     const scannerRef = useRef(null);
+
+//     useEffect(() => {
+//         if (active) {
+//             scannerRef.current = new QrScanner(videoRef.current, result => {
+//                 if (result && onScanned) {
+//                     onScanned(result.data);
+//                 }
+//             },undefined, undefined, true);
+//             scannerRef.current.start();
+//         } else {
+//             if (scannerRef.current) {
+//                 scannerRef.current.destroy();
+//             }
+//         }
+
+//         return () => {
+//             if (scannerRef.current) {
+//                 scannerRef.current.destroy();
+//             }
+//         };
+//     }, [active, onScanned]);
+
+//     return <video ref={videoRef} autoPlay playsInline style={{ width: "50%", height: "50%" }}></video>;
+// };
+
+// export default WebcamScanner;
+
+
+
+
+
+
+
+
+"use client";
+import React, { useEffect, useRef } from 'react';
+import QrScanner from 'qr-scanner';
 
 const WebcamScanner = ({ onScanned }) => {
-  const videoRef = useRef(null);
-  const [scanned, setScanned] = useState(false);
+    const videoRef = useRef(null);
+    const scannerRef = useRef(null);
 
-//   const router = useRouter();
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-
-    if (!videoElement) return;
-
-    const qrScanner = new QrScanner(
-      videoElement,
-      result => {
-        if (!scanned) { // Check if a QR code has already been scanned
-            console.log('Decoded QR code:', result.data);
-            setScanned(true);
-            // router.push('/');
-            if (onScanned){
-                onScanned(result.data);
+    useEffect(() => {
+        const initializeScanner = async () => {
+            try {
+                const scanner = new QrScanner(videoRef.current, result => {
+                    if (result && onScanned) {
+                        onScanned(result.data);
+                    }
+                });
+                await scanner.start();
+                scannerRef.current = scanner;
+            } catch (error) {
+                console.error('Failed to initialize QR scanner:', error);
             }
-        }
-        
-      },
-      {
-        // Your options here
-      }
-    );
+        };
 
-    qrScanner.start();
+        initializeScanner();
 
-    return () => {
-      qrScanner.stop();
-      qrScanner.destroy();
-    };
-  }, [scanned]);
+        return () => {
+            if (scannerRef.current) {
+                scannerRef.current.destroy();
+            }
+        };
+    }, [onScanned]);
 
-  return (
-    <video ref={videoRef} autoPlay playsInline style={{ width: "40%", height: "40%" }}></video>
-  );
+    return <video ref={videoRef} autoPlay playsInline style={{ width: "50%", height: "50%" }}></video>;
 };
 
 export default WebcamScanner;

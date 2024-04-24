@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  deleteUser,
+  updateProfile,
 } from 'firebase/auth';
 import { auth } from '@/app/firebase';
 
@@ -36,10 +38,21 @@ export const AuthContextProvider = ({ children }) => {
 
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
+   
   };
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const delete_user = (id) => {
+    return deleteUser(id);
+  };
+
+  const updateprofile = (user, displayName) => {
+    return updateProfile(user, {
+      displayName,
+    });
   };
 
   const logout = async () => {
@@ -48,7 +61,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, delete_user,updateProfile }}>
       {loading ? null : children}
       {/* {children} */}
     </AuthContext.Provider>

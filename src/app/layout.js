@@ -56,6 +56,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import ProtectedRoute from '@/app/protected/page';
 import SessionProvider from './SessionProvider';
+import "./globals.css";
 
 const noAuthRequired = ['/signin', '/signup'];
 
