@@ -75,35 +75,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
       if (result.value) {
         const [employee] = employees.filter(employee => employee.id === id);
 
-        // const tempuser = await getUserToDelete(employee.id)
-        // console.log("temp user: ",tempuser)
-
         deleteDoc(doc(db, "employees", id));
-
-        // auth().deleteUser(employee.id).then(() => {
-        //   console.log('Successfully deleted user');
-        // }).catch((error) => {
-        //   console.log('Error deleting user:', error);
-        // });
-
-        // auth.auth().deleteUser(employee.id)
-        // .then(() => {
-        //   console.log('Successfully deleted user');
-        // }).catch((error) => {
-        //   console.log('Error deleting user:', error);
-        // });
-
-        
-        
-
-        // console.log(employee)
-        // await delete_user(auth.currentUser)
-        // .then(() => {
-        //   console.log('Successfully deleted user');
-        // })
-        // .catch((error) => {
-        //   console.log('Error deleting user:', error);
-        // });
 
         Swal.fire({
           icon: 'success',
@@ -118,35 +90,6 @@ const Dashboard = ({ setIsAuthenticated }) => {
       }
     });
   };
-
-
-  // const getUserToDelete = async (userId) => {
-  //   console.log(userId)
-  //   const userRef = collection(db, "employees"); // Assuming users are stored in a "users" collection
-  //   const userQuery = query(userRef, where("email", "==", "kam@gmail.com")); // Query based on user I
-    
-
-  //   const querySnapshot = await getDocs(userQuery);
-  //   console.log(querySnapshot)
-  //   return querySnapshot.empty ? null : querySnapshot.docs[0].data();
-  // };
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     // <div className="container">

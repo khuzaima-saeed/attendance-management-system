@@ -66,7 +66,6 @@ export default function RootLayout({ children }) {
   const router = useRouter();
 
   const currentPath = usePathname()
-  console.log("current path: ",currentPath )
 
   return (
     <html lang="en">

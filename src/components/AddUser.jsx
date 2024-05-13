@@ -46,8 +46,6 @@ const Add = ({ employees, setEmployees, setIsAdding, getEmployees }) => {
       date,
     };
 
-    console.log(newEmployee)
-
     employees.push(newEmployee);
 
     try {

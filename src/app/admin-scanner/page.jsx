@@ -1,83 +1,4 @@
 "use client";
-// import React, { useState } from 'react';
-// import WebcamScanner from '@/components/QrScanner'; // Assuming the path to the WebcamScanner component
-// import { useAuth } from '@/context/AuthContext';
-// import { collection, addDoc, query, where, getDocs, updateDoc, Timestamp } from 'firebase/firestore';
-// import { db } from '@/app/firebase';
-
-// const AdminScanner = () => {
-//   const { user } = useAuth();
-//   const [errorMessage, setErrorMessage] = useState(null);
-//   const [scanning, setScanning] = useState(true);
-
-//   const handleScan = async (data) => {
-//     if (!data || !scanning) return;
-
-//     try {
-//       const qrData = JSON.parse(data);
-
-//       // Extract user information from the QR code
-//       const { id, email, name } = qrData;
-
-//       // Check if attendance exists for the user on the current day
-//       const today = new Date().toLocaleDateString();
-//       const q = query(
-//         collection(db, 'attendance'),
-//         where('employeeId', '==', id),
-//         where('date', '==', today)
-//       );
-//       const snapshot = await getDocs(q);
-
-//       if (snapshot.empty) {
-//         // Attendance doesn't exist, add a new document
-//         await addDoc(collection(db, 'attendance'), {
-//           employeeId: id,
-//           email: email,
-//           name: name,
-//           date: today,
-//           timeIn: new Date().toLocaleTimeString(), // Set timeIn to current time
-//           timeOut: null,
-//         });
-//         console.log('Attendance marked successfully!');
-//       } else {
-//         // Attendance exists, update the existing document
-//         const docRef = snapshot.docs[0].ref;
-//         await updateDoc(docRef, {
-//           timeOut: Timestamp.now(),
-//         });
-//         console.log('Attendance updated successfully!');
-//       }
-//     } catch (error) {
-//       console.error('Error scanning QR code:', error);
-//       setErrorMessage('Error scanning QR code. Please try again.');
-//     } finally {
-//       setScanning(false);
-//     }
-//   };
-
-//   const handleError = (error) => {
-//     console.error('QR code scan error:', error);
-//     setErrorMessage('Error scanning QR code. Please try again.');
-//   };
-
-//   return (
-//     <div>
-//       <h1>Admin Scanner</h1>
-//       <WebcamScanner onScanned={handleScan} stopDecoding={!scanning} />
-//       {errorMessage && <p>{errorMessage}</p>}
-//     </div>
-//   );
-// };
-
-// export default AdminScanner;
-
-
-
-
-
-
-
-// "use client";
 /* eslint-disable */
 
 import React from "react";
@@ -96,7 +17,6 @@ export default function AdminScanner() {
   useEffect(() => {
     return () => {
       if (qrRef.current !== null) {
-        console.log("Inside if to destroy")
         qrRef.current.stop(); // Stop the QR scanner
         qrRef.current.destroy(); // Destroy the QR scanner
         qrRef.current = null;
@@ -106,7 +26,6 @@ export default function AdminScanner() {
   }, []);
 
   useEffect(() => {
-    console.log("Inside useeffect")
     setUpQrScanner();
   }, []);
 
@@ -118,7 +37,6 @@ export default function AdminScanner() {
 
     if (isQrInitialized) return;
     setIsQrInitialized(true);
-    // console.log("Inside setupqrscanner")
 
     const qrScanner = new QrScanner(
       videoElem,
@@ -166,15 +84,11 @@ export default function AdminScanner() {
                   const attendanceId = attendanceDoc.id;
                   const attendanceRef = doc(db, "attendance", attendanceId);
 
-                  console.log("attendnce doc: ",attendanceDoc.data().timeOut)
-
                   if(attendanceDoc.data().timeOut == null){
 
                     await updateDoc(attendanceRef, {
                       timeOut: new Date().toLocaleTimeString()
                   });
-
-                  console.log("Checked out successfully!");
 
                   }else{
                     alert("Already Checked-Out!!")
@@ -182,7 +96,6 @@ export default function AdminScanner() {
                   }
 
               } else {
-                  console.log("No attendance record found for today.");
               }
           } catch (error) {
               console.error("Error checking out:", error);
